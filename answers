@@ -1,0 +1,343 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+#include <sstream>
+#include <cctype>
+using namespace std;
+
+/////////////////////////////////////////////////////////////////
+int evenCount(const int* a, int size) {
+    int count = 0;
+    const int* ptr = a;  // Initialize pointer to the start of the array
+
+    for (int i = 0; i < size; i++) {
+        if (*ptr % 2 == 0) {
+            count++;
+        }
+        ptr++;  // Move the pointer to the next element
+    }
+
+    return count;
+}
+
+/////////////////////////////////////////////////////////////////
+bool isMirrored(const int* a, const int* b, int size) {
+    const int* ptrA = a;       
+    const int* ptrB = b + size - 1; 
+    for (int i = 0; i < size; i++) {
+        if (*ptrA != *ptrB) {
+            return false;  
+        }
+        ptrA++;  
+    }
+    return true; 
+}
+
+/////////////////////////////////////////////////////////////////
+
+void sumArrays(const double* arr1, const double* arr2, double* sum, int size) {
+    const double* ptr1 = arr1; 
+    const double* ptr2 = arr2; 
+    double* ptrSum = sum;      
+
+    for (int i = 0; i < size; i++) {
+        *ptrSum = *ptr1 + *ptr2; 
+        ptr1++; 
+        ptr2++;  
+        ptrSum++;
+    }
+}
+
+/////////////////////////////////////////////////////////////////
+void swap(int* arr1, int* arr2, int size) {
+    int* ptr1 = arr1;
+    int* ptr2 = arr2; 
+
+    for (int i = 0; i < size; i++) {
+        int temp = *ptr1;  
+        *ptr1 = *ptr2;    
+        *ptr2 = temp;      
+        ptr1++;          
+        ptr2++;           
+    }
+}
+/////////////////////////////////////////////////////////////////
+bool is_in(const int* arr1, const int* arr2, int size1, int size2) {
+    const int* p1 = arr1; 
+    const int* p2 = arr2; 
+
+    for (int i = 0; i < size1; i++) {
+        bool found = false; 
+        p2 = arr2; 
+
+        for (int j = 0; j < size2; j++) {
+            if (*p1 == *p2) {
+                found = true;
+                break;
+            }
+            p2++; 
+        }
+
+        if (!found) {
+            return false; 
+        }
+
+        p1++; 
+    }
+
+    return true; 
+}
+/////////////////////////////////////////////////////////////////
+void power(double* n, const int* p) {
+    double result = 1.0;
+    int exponent = *p;
+
+    if (exponent < 0) {
+        for (int i = 0; i < -exponent; ++i) {
+            result /= *n;
+        }
+    } else {
+        for (int i = 0; i < exponent; ++i) {
+            result *= *n;
+        }
+    }
+
+    *n = result; 
+}
+
+/////////////////////////////////////////////////////////////////
+vector<int> addOne(vector<int>& v) {
+    int n = v.size();
+    for (int i = n - 1; i >= 0; --i) {
+        if (v[i] < 9) {
+            v[i]++;
+            return v;
+        }
+        v[i] = 0;
+    }
+    v.insert(v.begin(), 1);
+    return v;
+}
+/////////////////////////////////////////////////////////////////
+
+string normalizeString(const string& input) {
+   string normalized = input;
+
+    if (!normalized.empty()) {
+        normalized[0] = toupper(normalized[0]);
+        
+        for (size_t i = 1; i < normalized.length(); ++i) {
+            normalized[i] = tolower(normalized[i]);
+        }
+    }
+
+    return normalized;
+}
+/////////////////////////////////////////////////////////////////
+int singleNum(vector<int>& vec) {
+    int result = 0;
+    for (int num : vec) {
+        result ^= num;
+    }
+    return result;
+}
+int main() {
+    cout<<"Problem 1: "<<endl;
+    const int SIZE = 10;
+    float *ptr, arr11[SIZE];
+    ptr = arr11;
+    cout << "Input:" << endl;
+    for (int i = 0; i < SIZE; i++) {
+     
+        cin >> *(ptr + i);
+    }
+    for (int i = 0; i < SIZE; i++) {
+        *(ptr + i) = *(ptr + i) * 0.30;
+    }
+    cout << "Output:" << endl;
+    for (int i = SIZE - 1; i >= 0; i--) {
+        cout << *(ptr + i) << " ";
+    }
+    
+    cout << endl;
+
+    cout<<"Problem 2: "<<endl;
+     int size;
+    cout << "Enter the size of the array: ";
+    cin >> size;
+    int* arr22 = new int[size];  
+    cout << "Enter " << size << " elements:" << endl;
+    for (int i = 0; i < size; i++) {
+        cin >> arr22[i];
+    }
+    int result = evenCount(arr22, size);
+    cout << "Number of even numbers: " << result << endl;
+    delete[] arr22; 
+
+    cout<<"Problem 3: "<<endl;
+    int size3;
+    cout << "Enter the size of the arrays: ";
+    cin >> size3;
+    int* arr1 = new int[size3];  
+    int* arr2 = new int[size3];  
+
+    cout << "Enter elements for the first array:" << endl;
+    for (int i = 0; i < size3; i++) {
+        cin >> arr1[i];
+    }
+    cout << "Enter elements for the second array:" << endl;
+    for (int i = 0; i < size3; i++) {
+        cin >> arr2[i];
+    }
+    bool result3 = isMirrored(arr1, arr2, size3);
+    cout << (result3 ? "1" : "0") << endl;
+    delete[] arr1; 
+    delete[] arr2;  
+
+
+
+
+
+
+    cout<<"Problem 4: "<<endl;
+        int size4;
+
+    cout << "Enter the size of the arrays: ";
+    cin >> size4;
+
+    double* arr_1 = new double[size4]; 
+    double* arr_2 = new double[size4];  
+    double* sum = new double[size4];   
+
+    cout << "Enter elements for the first array:" << endl;
+    for (int i = 0; i < size4; i++) {
+        cin >> arr_1[i];
+    }
+
+    cout << "Enter elements for the second array:" << endl;
+    for (int i = 0; i < size4; i++) {
+        cin >> arr_2[i];
+    }
+    sumArrays(arr_1, arr_2, sum, size4);
+
+    cout << "Element-wise sum of the arrays:" << endl;
+    for (int i = 0; i < size4; i++) {
+        cout << sum[i] << " ";
+    }
+    cout << endl;
+
+    delete[] arr_1; 
+    delete[] arr_2; 
+    delete[] sum;  
+
+    cout<<"Problem 5: "<<endl;
+     int size5;
+    cout << "Enter the size of the arrays: ";
+    cin >> size5;
+    int* arr15 = new int[size5]; 
+    int* arr25 = new int[size5];  
+    cout << "Enter elements for the first array:" << endl;
+    for (int i = 0; i < size5; i++) {
+        cin >> arr15[i];
+    }
+    cout << "Enter elements for the second array:" << endl;
+    for (int i = 0; i < size5; i++) {
+        cin >> arr25[i];
+    }
+    swap(arr15, arr25, size5);
+    cout << "First array after swapping:" << endl;
+    for (int i = 0; i < size5; i++) {
+        cout << arr15[i] << " ";
+    }
+    cout << endl;
+    cout << "Second array after swapping:" << endl;
+    for (int i = 0; i < size5; i++) {
+        cout << arr25[i] << " ";
+    }
+    cout << endl;
+    delete[] arr15; 
+    delete[] arr25; 
+    
+    
+    
+    cout<<"Problem 6: "<<endl;
+     int size16, size26;
+
+    cout << "Enter the size of the first array: ";
+    cin >> size16;
+
+    int* arr16 = new int[size16]; 
+
+    cout << "Enter elements for the first array:" << endl;
+    for (int i = 0; i < size16; i++) {
+        cin >> arr16[i];
+    }
+
+    cout << "Enter the size of the second array: ";
+    cin >> size26;
+
+    int* arr26 = new int[size26]; 
+
+    cout << "Enter elements for the second array:" << endl;
+    for (int i = 0; i < size26; i++) {
+        cin >> arr26[i];
+    }
+
+    bool result6 = is_in(arr16, arr26, size16, size26);
+    cout << "Are all elements of the first array present in the second array? " << (result6 ? "1" : "0") << endl;
+
+    delete[] arr16; 
+    delete[] arr26; 
+
+    cout<<"Problem 7: "<<endl;
+    double base;
+    int exponent;
+
+    cout << "Enter the base and exponent: ";
+    cin >> base >> exponent;
+
+    power(&base, &exponent);
+
+    cout << "Result: " << base << endl;
+
+    cout<<"Problem 8: "<<endl;
+  vector<int> digits;
+    string line;
+  cout << "Enter the digits of the number (from right to left), separated by spaces, and press Enter: ";
+  getline(std::cin, line); 
+
+  istringstream iss_1(line); 
+    int digit;
+    while (iss_1 >> digit) { 
+        digits.push_back(digit);
+    }
+
+    vector<int> result8 = addOne(digits);
+
+  cout << "Output: ";
+    for (int num : result8) {
+      cout << num;
+    }
+    cout<<endl;
+    
+    cout<<"Problem 9: "<<endl;
+     string input;
+    cout << "Enter a string: ";
+  getline(cin, input);
+  string normalized = normalizeString(input);
+  cout << "Normalized string: " << normalized << endl;
+
+    cout<<"Problem 10: "<<endl;
+  vector<int> v;
+    string line10;
+    int num;
+    cout << "Enter the numbers separated by spaces and press Enter: ";
+    getline(cin, line10); 
+    istringstream iss(line10); 
+    while (iss >> num) { 
+        v.push_back(num);
+    }
+    cout << "Output: " << singleNum(v) << endl;
+    return 0;
+}
